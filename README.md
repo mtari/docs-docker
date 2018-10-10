@@ -17,7 +17,9 @@ This command is going to download and start hello-world image.
 ##Definitions
 ###Image
 An image contains 2 things:
+
 * start command
+
 * section of the storage (codebase, config, dev environment, etc).
 
 ###Container
