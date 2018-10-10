@@ -27,6 +27,7 @@ Contains the system and access hardware of a computer and an image.
 ##Commands
 * `docker run <image-name>`
 * `docker run <image-name> <command>`
-  for example:
-  `docker run busybox echo hi`
+
+  for example: `docker run busybox echo hi`
+  
   This is going to start the image and run the echo command as a start command.
