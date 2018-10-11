@@ -62,4 +62,25 @@ Contains the system and access hardware of a computer and an image.
 
   Stop running container.
 
-* 
+* `docker exec -it <id> <command>`
+
+  Execute a command on a container.
+
+* `docker exec -it <id> sh`
+
+  Gives terminal access to the running container.
+
+
+##Creating docker images
+
+Dockerfile -> Docker Client -> Docker Server -> Usable Image!
+
+Flow of 'Creating a dockerfile':
+1. Specify a base image
+2. Run some commands to install additional programs
+3. Specify a command to run on container startup
+
+###Example
+1. Created [docker file](/redis-image/Dockerfile) in redis-image folder.
+2. Run `docker build .` command to build th container.
+3. Run `docker run <id>` to run the container.
