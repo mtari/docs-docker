@@ -1,16 +1,19 @@
 #Docker 
 
-##Installation
+Installation
+------------
 1. First we need to create an account on https://www.docker.com/
 2. Download the client.
 3. Install the client.
 4. Login
 
-##Docker hub
+Docker hub
+----------
 [https://hub.docker.com/](https://hub.docker.com/)
 Docker hub is where we can browse other images, manage access and images, etc.
 
-##First run
+First run
+---------
 Run command: 
 ```
 docker run hello-world
@@ -18,7 +21,8 @@ docker run hello-world
 
 This command is going to download and start hello-world image.
 
-##Definitions
+Definitions
+-----------
 ###Image
 An image contains 2 things:
 
@@ -31,7 +35,8 @@ As a simple description: Container is an instance of image.
 
 Contains the system and access hardware of a computer and an image.
 
-##Commands
+Commands
+--------
 * `docker run <image-name>`
 
 * `docker run <image-name> <command>`
@@ -75,7 +80,8 @@ Contains the system and access hardware of a computer and an image.
   Gives terminal access to the running container.
 
 
-##Creating docker images
+Creating docker images
+----------------------
 
 Dockerfile -> Docker Client -> Docker Server -> Usable Image!
 
@@ -113,3 +119,9 @@ Then build the image `docker build -t mihalytari/nodejs .`
 
 We need to use port mapping to forward the request to the container.
 Then run the container `docker run -p 8080:8080 mihalytari/nodejs`
+
+Docker compose with multiple local containers
+---------------------------------------------
+`docker-compose up`
+Use it to run containers which don't require building. Basically this runs the `docker run myimage`.
+Otherwise run `docker-compose up --build` command.
