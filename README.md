@@ -6,6 +6,10 @@
 3. Install the client.
 4. Login
 
+##Docker hub
+[https://hub.docker.com/](https://hub.docker.com/)
+Docker hub is where we can browse other images, manage access and images, etc.
+
 ##First run
 Run command: 
 ```
@@ -84,3 +88,28 @@ Flow of 'Creating a dockerfile':
 1. Created [docker file](/redis-image/Dockerfile) in redis-image folder.
 2. Run `docker build .` command to build th container.
 3. Run `docker run <id>` to run the container.
+
+###Tagging docker image
+`docker build -t mihalytari/redis:latest .`
+In here 'mihalytari' is the docker userid, redis is the name and latest (version) is the tag.
+
+###Node.js web app + building container
+```
+# specify a base image
+FROM node:alpine
+
+WORKDIR /usr/app
+
+# Install dependencies
+COPY ./package.json ./
+RUN npm install
+COPY ./ ./
+
+# Default command
+CMD [ "npm", "start" ];
+```
+
+Then build the image `docker build -t mihalytari/nodejs .`
+
+We need to use port mapping to forward the request to the container.
+Then run the container `docker run -p 8080:8080 mihalytari/nodejs`
