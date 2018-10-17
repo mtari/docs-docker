@@ -7,10 +7,14 @@ Installation
 3. Install the client.
 4. Login
 
+
+
 Docker hub
 ----------
 [https://hub.docker.com/](https://hub.docker.com/)
 Docker hub is where we can browse other images, manage access and images, etc.
+
+
 
 First run
 ---------
@@ -20,6 +24,8 @@ docker run hello-world
 ```
 
 This command is going to download and start hello-world image.
+
+
 
 Definitions
 -----------
@@ -34,6 +40,8 @@ An image contains 2 things:
 As a simple description: Container is an instance of image.
 
 Contains the system and access hardware of a computer and an image.
+
+
 
 Commands
 --------
@@ -70,6 +78,7 @@ Execute a command on a container.
 
 ###`docker exec -it <id> sh`
 Gives terminal access to the running container.
+
 
 
 Creating docker images
@@ -112,6 +121,8 @@ Then build the image `docker build -t mihalytari/nodejs .`
 We need to use port mapping to forward the request to the container.
 Then run the container `docker run -p 8080:8080 mihalytari/nodejs`
 
+
+
 Docker compose with multiple local containers
 ---------------------------------------------
 ###`docker-compose up`
@@ -129,3 +140,30 @@ We can add restart policy, to restart a container after it's crashed and stopped
 Options: no, always, on-failure, unless-stopped
 
 Usage: `restart: always`
+
+
+
+Development flow
+----------------
+
+###Running dev Dockerfile:
+`docker run -f Dockerfile.dev .`
+
+###Using watcher to update app when a change is saved
+We need to change the `docker run` command to the next:
+`docker run -p 3000:3000 -v "<WORKDIR>/node_modules" -v "$(pwd):/<WORKDIR>" <image id>`
+
+This maps the folder to our local folder, so we don't need to rebuild the miage every time when we make a change in our files.
+
+Or we can write docker-compose file to simplify the command we need to execute. In this case the content of a docker-compose.yml file looks like:
+```
+version: '3'
+services: 
+  react-image:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+```
