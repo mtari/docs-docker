@@ -167,3 +167,27 @@ services:
       - /app/node_modules
       - .:/app
 ```
+
+###Running a command in a already running container
+`docker exec -it <container id> <command>`
+
+###`docker attach` command
+This attaches the stdin, stdout, stderr to the container, meaning we can type input commands to the container.
+
+###Using nginx
+nginx is going to serve our static files in production environment.
+
+###Implementing multi-step builds
+```
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package.json .
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx
+COPY --from=builder /app/build /usr/share/nginx/html
+```
+
+##Services overview
