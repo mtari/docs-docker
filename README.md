@@ -191,3 +191,68 @@ COPY --from=builder /app/build /usr/share/nginx/html
 ```
 
 ##Services overview
+In this section we use github + travis + aws to deploy our application.
+The Dockerfile.dev and the Dockerfile is the same as above.
+
+The .travis.yml content
+```
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t mihalytari/react-image -f Dockerfile.dev .
+
+script:
+  - docker run mihalytari/react-image npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "react-image"
+  env: "ReactImage-env"
+  bucket_name: "elasticbeanstalk-us-east-2-151932697359"
+  bucket_path: "react-image"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+```
+
+Dockerfile's content
+```
+FROM node:alpine as builder
+WORKDIR '/app'
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx
+EXPOSE 80
+COPY --from=builder /app/build /usr/share/nginx/html
+```
+
+Docker-compose content
+```
+version: '3'
+services: 
+  react-image:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  react-image-tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
+```
