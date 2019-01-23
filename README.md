@@ -121,6 +121,9 @@ Then build the image `docker build -t mihalytari/nodejs .`
 We need to use port mapping to forward the request to the container.
 Then run the container `docker run -p 8080:8080 mihalytari/nodejs`
 
+### Building custom Doackerfile
+`docker build -f Dockerfile.dev -t mihalytari/monitoring .`
+
 
 
 Docker compose with multiple local containers
